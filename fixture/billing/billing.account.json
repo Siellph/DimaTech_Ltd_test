@@ -1,0 +1,20 @@
+[
+    {
+      "user_id": 1,
+      "account_name": "First Account",
+      "account_date": "2025-07-24 11:05:27.865702+00:00",
+      "balance": 10000.0
+    },
+    {
+      "user_id": 1,
+      "account_name": "Second Account",
+      "account_date": "2025-07-20 11:05:27.865702+00:00",
+      "balance": 1500.0
+    },
+    {
+      "user_id": 1,
+      "account_name": "Third Account",
+      "account_date": "2025-07-23 11:05:27.865702+00:00",
+      "balance": 2050.0
+    }
+]

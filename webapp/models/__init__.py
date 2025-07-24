@@ -1,5 +1,5 @@
 from sqlalchemy.orm import configure_mappers
 
-from . import sirius
+from . import billing
 
 configure_mappers()

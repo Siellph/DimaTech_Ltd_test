@@ -1,0 +1,16 @@
+[
+  {
+      "username": "user",
+      "email": "user@example.com",
+      "hashed_password": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "role": "user",
+      "full_name": "Full User Name"
+  },
+  {
+      "username": "admin",
+      "email": "admin@example.com",
+      "hashed_password": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "role": "admin",
+      "full_name": "Admin Administrator"
+  }
+]
