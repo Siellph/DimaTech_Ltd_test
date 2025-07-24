@@ -20,16 +20,16 @@ class JwtTokenT(TypedDict):
 @dataclass
 class JwtAuth:
     secret: str
-    alg: str = "HS256"
+    alg: str = 'HS256'
 
     def create_token(self, user_id: int, role: str) -> str:
         payload = {
-            "uid": uuid.uuid4().hex,
-            "exp": int((datetime.utcnow() + timedelta(days=6)).timestamp()),
-            "user_id": user_id,
-            "role": role,
+            'uid': uuid.uuid4().hex,
+            'exp': int((datetime.utcnow() + timedelta(days=6)).timestamp()),
+            'user_id': user_id,
+            'role': role,
         }
-        return jwt.encode({"alg": self.alg}, payload, self.secret).decode("utf-8")
+        return jwt.encode({'alg': self.alg}, payload, self.secret).decode('utf-8')
 
     def decode_token(self, token: str) -> JwtTokenT:
         try:
@@ -37,14 +37,14 @@ class JwtAuth:
             claims.validate()  # проверка exp и других полей
             return cast(JwtTokenT, claims)
         except JoseError:
-            raise Unauthorized("Invalid or expired token")
+            raise Unauthorized('Invalid or expired token')
 
     def get_current_user(self, request: Request) -> JwtTokenT:
-        auth_header = request.headers.get("authorization")
-        if not auth_header or not auth_header.startswith("Bearer "):
-            raise Unauthorized("Missing or invalid Authorization header")
+        auth_header = request.headers.get('authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            raise Unauthorized('Missing or invalid Authorization header')
 
-        token = auth_header.split(" ", 1)[1]
+        token = auth_header.split(' ', 1)[1]
         return self.decode_token(token)
 
 

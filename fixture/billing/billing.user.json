@@ -2,14 +2,14 @@
   {
       "username": "user",
       "email": "user@example.com",
-      "hashed_password": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "hashed_password": "$2b$12$r8qN/1D4kbpKjmkZiyxL1eHX8zppC1hF1W4Ei3pWTiM75Wd./2Ntu",
       "role": "user",
       "full_name": "Full User Name"
   },
   {
       "username": "admin",
       "email": "admin@example.com",
-      "hashed_password": "d8578edf8458ce06fbc5bb76a58c5ca4",
+      "hashed_password": "$2b$12$r8qN/1D4kbpKjmkZiyxL1eHX8zppC1hF1W4Ei3pWTiM75Wd./2Ntu",
       "role": "admin",
       "full_name": "Admin Administrator"
   }
