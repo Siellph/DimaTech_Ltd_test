@@ -1,14 +1,13 @@
 version: '3.9'
 
 services:
-  web:
-    container_name: web
+  billing_app_web:
+    container_name: billing_app_web
     build:
       dockerfile: docker/Dockerfile
       context: .
     ports:
       - "8000:8000"
-      - "6457:6457"
     command: scripts/web/startup.sh -m -l
     restart: on-failure
     env_file:
@@ -16,13 +15,13 @@ services:
     volumes:
       - .:/code
     depends_on:
-      web_db:
+      billing_app_db:
         condition: service_healthy
     networks:
-      - billingapp_network
+      - billing_app_network
 
-  web_db:
-    container_name: web_db
+  billing_app_db:
+    container_name: billing_app_db
     image: library/postgres:13.2
     environment:
       - POSTGRES_USER=postgres
@@ -39,11 +38,11 @@ services:
     volumes:
       - ./scripts/postgres:/docker-entrypoint-initdb.d
     networks:
-      - billingapp_network
+      - billing_app_network
 
 volumes:
   prom_data:
 
 networks:
-  billingapp_network:
+  billing_app_network:
     driver: bridge
