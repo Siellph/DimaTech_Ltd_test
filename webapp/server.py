@@ -1,7 +1,8 @@
-from sanic import Sanic
+from sanic import Blueprint, Sanic
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from conf import MySanicConfig
+from webapp.api.account.router import bp_account, bp_transaction
 from webapp.api.login.router import bp_auth, bp_user
 from webapp.db.postgres import async_session
 
@@ -19,7 +20,8 @@ def create_app() -> Sanic:
         if session:
             await session.__aexit__(None, None, None)
 
-    app.blueprint([bp_user, bp_auth])
+    content = Blueprint.group(bp_user, bp_auth, bp_account, bp_transaction, url_prefix='/api/v1')
+    app.blueprint(content)
 
     app.ext.openapi.add_security_scheme(
         'token',

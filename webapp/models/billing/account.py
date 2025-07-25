@@ -15,7 +15,7 @@ class Account(Base):
     user_id: Mapped[int] = mapped_column(
         ForeignKey(f'{DEFAULT_SCHEMA}.user.user_id', ondelete='CASCADE'), nullable=False
     )
-    account_date: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    account_date: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.now())
     balance: Mapped[float] = mapped_column(default=0.0)
 
     user = relationship('User', back_populates='accounts')

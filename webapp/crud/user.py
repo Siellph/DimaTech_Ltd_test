@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from webapp.models.billing.account import Account
 from webapp.models.billing.user import User
-from webapp.schema.login.user import UserCreate
+from webapp.schema.login.user import UserCreate, UserUpdate
 from webapp.utils.auth.password import hash_password
 
 
@@ -52,24 +52,48 @@ async def create_user(session: AsyncSession, user_data: UserCreate) -> User:
     try:
         await session.commit()
 
-        # Повторная загрузка с подгрузкой связанных accounts
-        result = await session.execute(
-            select(User)
-            .options(selectinload(User.accounts).selectinload(Account.transactions))
-            .where(User.user_id == user.user_id)
-        )
-        user_with_accounts = result.scalar_one()
+        user_with_accounts = await get_user_by_id(session, user.user_id)
 
         return user_with_accounts
     except Exception as e:
         await session.rollback()
         error_msg = str(e.orig)
         if 'uq_user_username' in error_msg:
-            raise ValueError('Пользователь с таким username уже существует')
+            raise ValueError('A user with this username already exists')
         elif 'uq_user_email' in error_msg:
-            raise ValueError('Пользователь с таким email уже существует')
+            raise ValueError('A user with this email already exists')
         else:
-            raise ValueError('Ошибка при создании пользователя: ' + str(e))
+            raise ValueError('Error creating user: ' + str(e))
+
+
+async def update_user(session: AsyncSession, user_id: int, user_data: UserUpdate) -> User:
+    user = await get_user_by_id(session, user_id)
+    if not user:
+        raise ValueError('User not found')
+
+    if user_data.username:
+        user.username = user_data.username
+    if user_data.email:
+        user.email = user_data.email
+    if user_data.full_name:
+        user.full_name = user_data.full_name
+    if user_data.password:
+        user.hashed_password = hash_password(user_data.password)
+
+    session.add(user)
+    try:
+        await session.commit()
+        user_with_accounts = await get_user_by_id(session, user.user_id)
+        return user_with_accounts
+    except Exception as e:
+        await session.rollback()
+        error_msg = str(e.orig)
+        if 'uq_user_username' in error_msg:
+            raise ValueError('The username is occupied')
+        elif 'uq_user_email' in error_msg:
+            raise ValueError('The email is occupied')
+        else:
+            raise ValueError('Update error: ' + str(e))
 
 
 async def delete_user(session: AsyncSession, user_id: int) -> bool:

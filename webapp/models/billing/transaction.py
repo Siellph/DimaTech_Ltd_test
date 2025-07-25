@@ -21,7 +21,7 @@ class Transaction(Base):
         ForeignKey(f'{DEFAULT_SCHEMA}.user.user_id', ondelete='CASCADE'), nullable=False
     )
     amount: Mapped[float] = mapped_column(Numeric(18, 2), nullable=False)
-    timestamp: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    timestamp: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.now())
     status: Mapped[str] = mapped_column(String, nullable=False)
     signature: Mapped[str] = mapped_column(String, nullable=False)
 
