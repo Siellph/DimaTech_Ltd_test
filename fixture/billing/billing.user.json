@@ -7,6 +7,13 @@
       "full_name": "Full User Name"
   },
   {
+      "username": "user2",
+      "email": "user2@example.com",
+      "hashed_password": "$2b$12$r8qN/1D4kbpKjmkZiyxL1eHX8zppC1hF1W4Ei3pWTiM75Wd./2Ntu",
+      "role": "user",
+      "full_name": "Full User Name2"
+  },
+  {
       "username": "admin",
       "email": "admin@example.com",
       "hashed_password": "$2b$12$r8qN/1D4kbpKjmkZiyxL1eHX8zppC1hF1W4Ei3pWTiM75Wd./2Ntu",

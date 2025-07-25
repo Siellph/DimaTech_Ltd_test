@@ -41,14 +41,6 @@ services:
     networks:
       - billingapp_network
 
-  redis:
-    container_name: redis
-    image: redis:6.2.4
-    ports:
-      - "6379:6379"
-    networks:
-      - billingapp_network
-
 volumes:
   prom_data:
 
