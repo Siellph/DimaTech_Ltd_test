@@ -52,17 +52,17 @@
 
 - admin
     ```json
-        {
-          "email": "admin@example.com",
-          "password": "qwerty"
-        }
+    {
+      "email": "admin@example.com",
+      "password": "qwerty"
+    }
     ```
 - user
     ```json
-        {
-          "email": "user@example.com",
-          "password": "qwerty"
-        }
+    {
+      "email": "user@example.com",
+      "password": "qwerty"
+    }
     ```
 
 ### Примеры для проверки `/api/v1/transaction/webhook/payment` с SECRET_KEY `gfdmhghif38yrf9ew0jkf32` (указан в проекте)
