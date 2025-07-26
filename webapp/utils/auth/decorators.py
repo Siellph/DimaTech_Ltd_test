@@ -1,8 +1,7 @@
-# webapp/utils/auth/decorators.py
-
 from functools import wraps
 
 from sanic.exceptions import Unauthorized
+from sanic.log import logger
 from sanic.request import Request
 from sanic.response import json
 
@@ -17,8 +16,9 @@ def protected():
                 user_data = jwt_auth.get_current_user(request)
                 request.ctx.user = user_data
             except Unauthorized as e:
+                logger.warning('Protected route %s is not authorized', request.path)
                 return json({'error': str(e)}, status=401)
-
+            logger.info('User %s accessed protected route %s', request.ctx.user.get('user_id'), request.path)
             return await f(request, *args, **kwargs)
 
         return decorated_function

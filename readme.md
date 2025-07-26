@@ -42,3 +42,49 @@
 - `docker-compose.yml` — конфигурация Docker Compose (описание сервисов, БД)
 - `pyproject.toml` — зависимости и настройки проекта
 - `README.md` — документация проекта
+
+### Примеры для проверки `/api/v1/transaction/webhook/payment` с SECRET_KEY `gfdmhghif38yrf9ew0jkf32` (указан в проекте)
+
+- Добавит платеж счету 1 у пользователя 1, если создан, иначе создаст и затем добавит платеж
+    ```json
+    {
+    "transaction_id": "5eae174f-7cd0-472c-bd36-35660f00132b",
+    "account_id": 1,
+    "user_id": 1,
+    "amount": 100,
+    "signature": "7b47e41efe564a062029da3367bde8844bea0fb049f894687cee5d57f2858bc8"
+    }
+    ```
+
+- Добавит платеж счету 2 у пользователя 1, если создан, иначе создаст и затем добавит платеж
+    ```json
+    {
+    "transaction_id": "baa0c6dd-f694-4474-be8b-d15c52eabc99",
+    "account_id": 2,
+    "user_id": 1,
+    "amount": 1500,
+    "signature": "091d98c80c1cef09bb6bf15de820717a3336ba66a70106ccd5f158f948787585"
+    }
+    ```
+
+- Добавит платеж счету 2 у пользователя 1, если создан, иначе создаст и затем добавит платеж
+    ```json
+    {
+    "transaction_id": "0ba656f1-7aca-414d-b6a4-7a6b82e55cce",
+    "account_id": 2,
+    "user_id": 1,
+    "amount": 540,
+    "signature": "c29cbf5ab7d09254ea4376c07e660d7b5ee706a1e385eb2661902e5344ab38ae"
+    }
+    ```
+
+- Добавит платеж счету 6 у пользователя 2, если создан, иначе создаст и затем добавит платеж
+    ```json
+    {
+    "transaction_id": "7b558fbf-d742-4656-a7df-80e1050ecf20",
+    "account_id": 6,
+    "user_id": 2,
+    "amount": 150,
+    "signature": "3cb03bde126237aaf3ee04a77f5269cd083feb0df318f32d7efa9aafad06650a"
+    }
+    ```

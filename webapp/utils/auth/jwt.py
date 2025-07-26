@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import TypedDict, cast
 
 from authlib.jose import JoseError, jwt
@@ -25,7 +25,7 @@ class JwtAuth:
     def create_token(self, user_id: int, role: str) -> str:
         payload = {
             'uid': uuid.uuid4().hex,
-            'exp': int((datetime.utcnow() + timedelta(days=6)).timestamp()),
+            'exp': int((datetime.now(timezone.utc) + timedelta(days=6)).timestamp()),
             'user_id': user_id,
             'role': role,
         }
@@ -42,7 +42,7 @@ class JwtAuth:
     def get_current_user(self, request: Request) -> JwtTokenT:
         auth_header = request.headers.get('authorization')
         if not auth_header or not auth_header.startswith('Bearer '):
-            raise Unauthorized('Missing or invalid Authorization header')
+            raise Unauthorized('Missing or invalid Authorization header. Unauthorized.')
 
         token = auth_header.split(' ', 1)[1]
         return self.decode_token(token)

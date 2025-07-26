@@ -1,26 +1,22 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from webapp.schema.account.transaction import TransactionRead
-
-
-class AccountCreate(BaseModel):
-    account_name: str = Field(..., example='Main Wallet')
 
 
 class AccountUpdate(BaseModel):
     account_name: Optional[str] = None
 
 
-class AccountRead(AccountCreate):
+class AccountRead(AccountUpdate):
     account_id: int
     account_date: datetime
+    balance: float
     transactions: list[TransactionRead] = []
 
 
-class AccountsReadShort(AccountCreate):
+class AccountsReadShort(AccountUpdate):
     account_id: int
-    account_name: str
-    balance: float = 0.0
+    balance: float

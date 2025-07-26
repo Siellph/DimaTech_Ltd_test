@@ -10,13 +10,14 @@ class Account(Base):
     __tablename__ = 'account'
     __table_args__ = {'schema': DEFAULT_SCHEMA}
 
-    account_id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
-    account_name: Mapped[str] = mapped_column(String, unique=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, index=True)
+    account_id: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
+    account_name: Mapped[str] = mapped_column(String, nullable=True)
     user_id: Mapped[int] = mapped_column(
         ForeignKey(f'{DEFAULT_SCHEMA}.user.user_id', ondelete='CASCADE'), nullable=False
     )
     account_date: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.now())
-    balance: Mapped[float] = mapped_column(default=0.0)
+    balance: Mapped[float] = mapped_column(default=0)
 
     user = relationship('User', back_populates='accounts')
     transactions = relationship(

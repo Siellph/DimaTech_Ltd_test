@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import List
 
 from sqlalchemy import insert
+from sqlalchemy.exc import IntegrityError  # Добавлено
 
 from webapp.db.postgres import async_session
 from webapp.models.meta import metadata
@@ -39,8 +40,13 @@ async def main(fixtures: List[str]) -> None:
         parse_dates_in_values(values)
 
         async with async_session() as session:
-            await session.execute(insert(model).values(values))
-            await session.commit()
+            try:
+                await session.execute(insert(model).values(values))
+                await session.commit()
+            except IntegrityError:
+                # Просто игнорируем ошибку, если запись уже существует
+                await session.rollback()
+                pass
 
 
 if __name__ == '__main__':
