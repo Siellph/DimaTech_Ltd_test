@@ -48,6 +48,23 @@
 - `pyproject.toml` — зависимости и настройки проекта
 - `README.md` — документация проекта
 
+### Тестовые пользователи
+
+- admin
+    ```json
+        {
+          "email": "admin@example.com",
+          "password": "qwerty"
+        }
+    ```
+- user
+    ```json
+        {
+          "email": "user@example.com",
+          "password": "qwerty"
+        }
+    ```
+
 ### Примеры для проверки `/api/v1/transaction/webhook/payment` с SECRET_KEY `gfdmhghif38yrf9ew0jkf32` (указан в проекте)
 
 - Добавит платеж счету 1 у пользователя 1, если создан, иначе создаст и затем добавит платеж
